@@ -1,0 +1,19 @@
+{
+  "name": "nezumi",
+  "version": "0.0.1",
+  "description": "a cli tool to do same things as soimort/you-get.Proposed to support daemon mode for web app.",
+  "author": "jackyzy823",
+  "main": "./index.js",
+  "dependencies": {
+    "yargs": "*"
+  },
+  "devDependencies": {
+    "charm": "*",
+    "progress": "*",
+    "multimeter": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jackyzy823/nezumi.git"
+  }
+}
