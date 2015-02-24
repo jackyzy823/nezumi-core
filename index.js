@@ -2,10 +2,9 @@
 
 'use strict'
 var info = require('./package');
-var util = require('util')
-
 process.title = info.name;
-debugger;
+var util = require('util');
+var path = require('path');
 
 process.on('SIGINT', function() {
   console.log(util.format('\rOoops! %s terminated.', info.name));
@@ -22,7 +21,7 @@ delete options._;
 // delete options._;
 var matchExtractor = require('./lib/matcher.js').match;
 
-var _extractorFolder = __dirname + '/lib/extractors/';
+var extractorFolder = path.join(__dirname, 'lib', 'extractors');
 
 if (urls.length === 0 || options.help) {
   usage.showHelp();
@@ -44,7 +43,7 @@ if (options.daemon) {
         console.log(util.format('unsupported url :%s', url));
         return;
       }
-      require(_extractorFolder + resModule).download(url, options, function(err, result) {
+      require(path.join(extractorFolder, resModule)).download(url, options, function(err, result) {
 
       });
     });
