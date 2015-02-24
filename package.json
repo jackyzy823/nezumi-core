@@ -5,7 +5,7 @@
   "author": "jackyzy823",
   "main": "./index.js",
   "dependencies": {
-    "yargs": "*"
+    "yargs": ">=3.2.1"
   },
   "devDependencies": {
     "charm": "*",
@@ -15,5 +15,10 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/jackyzy823/nezumi.git"
+  },
+  "scripts":{
+    "test":"node tests/nezumi.test.js"
   }
+  
+
 }
