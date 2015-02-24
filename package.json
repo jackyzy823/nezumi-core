@@ -8,17 +8,15 @@
     "yargs": ">=3.2.1"
   },
   "devDependencies": {
-    "charm": "*",
-    "progress": "*",
-    "multimeter": "*"
+
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/jackyzy823/nezumi.git"
   },
-  "scripts":{
-    "test":"node tests/nezumi.test.js"
+  "scripts": {
+    "test": "node tests/nezumi.test.js"
   }
-  
+
 
 }
