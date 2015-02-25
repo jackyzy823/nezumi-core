@@ -11,27 +11,23 @@ process.on('SIGINT', function() {
   process.exit(1);
 });
 
-var usage = require('./lib/usage.js');
-var urls = usage.argv._;
+var usage = require('./lib/usage.js')(process.argv);
+var urls = usage.urls;
+var options = usage.options;
+/*var urls = usage.argv._;*/
 /* options do not need _(urls)*/
-var options = usage.argv;
-delete options._;
+/*var options = usage.argv;*/
+/*delete options._;*/
 
-// var options = argv;
-// delete options._;
-var matchExtractor = require('./lib/matcher.js').match;
-
-var extractorFolder = path.join(__dirname, 'lib', 'extractors');
-
-if (urls.length === 0 || options.help) {
-  usage.showHelp();
-}
 
 if (options.daemon) {
   /* Enter daemon */
   console.log('current not support');
   process.exit(1);
 } else {
+  var matchExtractor = require('./lib/matcher.js').match;
+  var extractorFolder = path.join(__dirname, 'lib', 'extractors'); 
+  
   urls.forEach(function(url, index) {
     var url = url.toString().toLowerCase();
     /* not a strict regexp*/
