@@ -7,8 +7,10 @@
   "dependencies": {
     "yargs": ">=3.2.1"
   },
-  "devDependencies": {
+  "optionalDependencies":{
     "commander": "^2.6.0"
+  },
+  "devDependencies": {
   },
   "repository": {
     "type": "git",
@@ -16,5 +18,8 @@
   },
   "scripts": {
     "test": "node tests/nezumi.test.js"
+  },
+  "bin":{
+    "nezumi":"./index.js"
   }
 }
