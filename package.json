@@ -9,12 +9,23 @@
     "request": "^2.53.0",
     "yargs": ">=3.2.1"
   },
+<<<<<<< HEAD
   "devDependencies": {},
+=======
+  "optionalDependencies":{
+    "commander": "^2.6.0"
+  },
+  "devDependencies": {
+  },
+>>>>>>> 01c236f63668bef4894a9d16ace5e3e3983e88ae
   "repository": {
     "type": "git",
     "url": "git://github.com/jackyzy823/nezumi.git"
   },
   "scripts": {
     "test": "node tests/nezumi.test.js"
+  },
+  "bin":{
+    "nezumi":"./index.js"
   }
 }
