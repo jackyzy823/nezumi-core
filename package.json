@@ -5,11 +5,11 @@
   "author": "jackyzy823",
   "main": "./index.js",
   "dependencies": {
+    "async": "^0.9.0",
+    "request": "^2.53.0",
     "yargs": ">=3.2.1"
   },
-  "devDependencies": {
-
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git://github.com/jackyzy823/nezumi.git"
@@ -17,6 +17,4 @@
   "scripts": {
     "test": "node tests/nezumi.test.js"
   }
-
-
 }
