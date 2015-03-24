@@ -13,22 +13,7 @@ process.on('SIGINT', function() {
   process.exit(1);
 });
 
-<<<<<<< HEAD
-var usage = require('./lib/usage.js');
-var srcUrls = usage.argv._;
-/* options do not need _(srcUrls)*/
-var options = usage.argv;
-delete options._;
 
-// var options = argv;
-// delete options._;
-var matchExtractor = require('./lib/matcher.js').match;
-var extractorFolder = path.join(__dirname, 'lib', 'extractors');
-
-if (srcUrls.length === 0 || options.help) {
-  usage.showHelp();
-}
-=======
 var usage = require('./lib/usage.js')(process.argv);
 var urls = usage.urls;
 var options = usage.options;
@@ -37,37 +22,22 @@ var options = usage.options;
 /*var options = usage.argv;*/
 /*delete options._;*/
 
->>>>>>> 01c236f63668bef4894a9d16ace5e3e3983e88ae
 
-var multi = require('multimeter')(process);
+// var multi = require('multimeter')(process);
 
 if (options.daemon) {
   /* Enter daemon */
   console.log('current not support');
   process.exit(1);
-<<<<<<< HEAD
-}
-srcUrls.forEach(function(srcUrl, index) {
-  var srcUrl = srcUrl.toString().toLowerCase();
-  /* not a strict regexp*/
-  if (!srcUrl.match(/^https?:\/\/.+$/)) {
-    srcUrl = 'http://' + srcUrl;
-  }
-  matchExtractor(srcUrl, function download(resModule) {
-    if (!resModule) {
-      console.log(util.format('unsupported url :%s', srcUrl));
-      return;
-=======
 } else {
   var matchExtractor = require('./lib/matcher.js').match;
-  var extractorFolder = path.join(__dirname, 'lib', 'extractors'); 
-  
+  var extractorFolder = path.join(__dirname, 'lib', 'extractors');
+
   urls.forEach(function(url, index) {
     var url = url.toString().toLowerCase();
     /* not a strict regexp*/
     if (!url.match(/^https?:\/\/.+$/)) {
       url = 'http://' + url;
->>>>>>> 01c236f63668bef4894a9d16ace5e3e3983e88ae
     }
     var p = require(path.join(extractorFolder, resModule))(srcUrl, options, function realDownload(err, infos) {
       if (err) {
@@ -101,9 +71,4 @@ srcUrls.forEach(function(srcUrl, index) {
       // do sth with msg
     })
   });
-<<<<<<< HEAD
-
-});
-=======
 }
->>>>>>> 01c236f63668bef4894a9d16ace5e3e3983e88ae
