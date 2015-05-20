@@ -46,26 +46,27 @@ if (options.daemon) {
       }
       // infos  should be array even array.length==1-> 
       //{ ,items:[{url:[string,string,...],title,size,},{url:[string],title,size},{url:function_to_gen_url,title,size},{url:[function_to_gen,function],title,size}]}
-      info.items.forEach(function(item, index) {
-        if (Array.isArray(item)) {
-          if (url)
+      // info.items.forEach(function(item, index) {
+      //   if (Array.isArray(item)) {
+      //     if (url) {
 
-        }
-        if (typeof item === 'function') {
-          for (var len = item.length(), i = 0; i < len; i++) {
-            var url = item.next();
-            download_url(url, )
-          }
-        } else if (Array.isArray(item)) {
-          item.forEach(function(url, idx) {
-            if (typeof url === 'function') {
-              url = url();
-            }
+      //     }
 
-          });
-        }
-      });
+      //   }
+      //   if (typeof item === 'function') {
+      //     for (var len = item.length(), i = 0; i < len; i++) {
+      //       var url = item.next();
+      //       download_url(url);
+      //     }
+      //   } else if (Array.isArray(item)) {
+      //     item.forEach(function(url, idx) {
+      //       if (typeof url === 'function') {
+      //         url = url();
+      //       }
 
+      //     });
+      //   }
+      // });
     });
     p.on('display', function(msg) {
       // do sth with msg

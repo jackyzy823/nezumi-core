@@ -6,6 +6,6 @@ match('http://www.iqiyi.com/yinyue/20130716/302007c528607f58.html', function(res
 });
 
 match('http://v.pptv.com/show/xt7FQ6sRgb8iaoAg.html', function(result) {
-  assert.equal('pptv', result);
   /*casue pptv is a folder contains index.js*/
+  assert.equal('pptv', result);
 });
