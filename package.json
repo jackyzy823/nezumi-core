@@ -6,8 +6,7 @@
   "main": "./index.js",
   "dependencies": {
     "async": "^0.9.0",
-    "request": "^2.53.0",
-    "nezumi-core": "file:../nezumi-core"
+    "request": "^2.53.0"
   },
   "devDependencies": {},
   "repository": {
