@@ -1,21 +1,18 @@
 {
-  "name": "nezumi",
+  "name": "nezumi-core",
   "version": "0.0.1",
-  "description": "a cli tool to do same things as soimort/you-get.Proposed to support daemon mode for web app.",
+  "description": "core utils of nezumi project",
   "author": "jackyzy823",
   "main": "./index.js",
   "dependencies": {
     "async": "^0.9.0",
     "request": "^2.53.0",
-    "yargs": ">=3.2.1"
-  },
-  "optionalDependencies": {
-    "commander": "^2.6.0"
+    "nezumi-core": "file:../nezumi-core"
   },
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git://github.com/jackyzy823/nezumi.git"
+    "url": "git://github.com/jackyzy823/nezumi-core.git"
   },
   "scripts": {
     "test": "node tests/nezumi.test.js"
