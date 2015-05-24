@@ -4,6 +4,12 @@ var matcher = require('./lib/matcher');
 exports.name = info.name;
 exports.version = info.version;
 
+/*
+ * @params {String} url
+ * @params {Object|null} options
+ *    options includes 1) extract_proxy 2)
+ * @params {function} callback(err,)
+ */
 
 exports.extract = function extract(url, options, callback) {
   matcher(url, function(err, moduleName) {
