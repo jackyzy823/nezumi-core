@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var info = require('./package');
 var matcher = require('./lib/matcher');
 
@@ -11,7 +13,7 @@ exports.version = info.version;
  * @params {function} callback(err,)
  */
 
-exports.extract = function extract(url, options, callback) {
+function extract(url, options, callback) {
   matcher(url, function(err, moduleName) {
     if (err) {
       callback && callback(err);
@@ -24,4 +26,27 @@ exports.extract = function extract(url, options, callback) {
       callback && callback(err, urlsList, moreOptions);
     });
   });
+}
+
+exports.extract = extract;
+
+if (module == require.main) {
+  if (process.argv.length >= 2) {
+    var url = process.argv[2];
+    if (process.argv[3]) {
+      try {
+        var options = JSON.parse(process.argv[3])
+      } catch (ex) {}
+    }
+    extract(url, options, function(err, urls) {
+      if (err) {
+        console.log('some thing wrong oops');
+        console.trace(err);
+        return;
+      }
+      console.log(urls);
+    });
+  }
+} else {
+  process.exit(0);
 }
