@@ -38,6 +38,9 @@ if (module == require.main) {
         var options = JSON.parse(process.argv[3])
       } catch (ex) {}
     }
+    if (!url) {
+      process.exit(0);
+    }
     extract(url, options, function(err, infos) {
       if (err) {
         console.log('some thing wrong oops');
@@ -45,7 +48,7 @@ if (module == require.main) {
         process.exit(1);
       }
       /* For usage  like  wget `node index.js url`*/
-      infos.url.forEach(function(item, idx) {
+      infos.urls.forEach(function(item, idx) {
         process.stdout.write(item + ' '); //last space whatever
       });
     });
