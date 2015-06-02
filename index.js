@@ -14,13 +14,13 @@ exports.version = info.version;
  */
 
 function extract(url, options, callback) {
-  matcher(url, function(err, moduleName) {
+  matcher(url, function(err, moduleName, normalizedUrl) {
     if (err) {
       callback && callback(err);
       return;
     }
     var extractModule = require('./lib/extractors/' + moduleName);
-    extractModule.parse(url, options, function(err, urlsList, moreOptions) {
+    extractModule.parse(normalizedUrl, options, function(err, urlsList, moreOptions) {
       //urlsList =>[ {title:xx,size:yy,urls:['xx.flv?part1','xx.flv?part2']},{title:xx,size:yy,urls:['']}]
       //some handler?
       callback && callback(err, urlsList, moreOptions);
