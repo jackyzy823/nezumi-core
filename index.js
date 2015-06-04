@@ -11,30 +11,37 @@ exports.version = info.version;
 /*
  * @params {String} url
  * @params {Object|null} options
- *    options includes 1) extract_proxy 2)
+ *    options includes 1) proxy for extractors 2)
  * @params {function} callback(err,urlsList,moreOptions)
- *   moreOptions include 1)common headers for download headers:{'referer':xxx} 2)afterDownload function ,such as data decrypt. 
- *   urlList {Array|function} -> 
+ *   moreOptions include 1)common headers for download headers:{'referer':xxx} 2)afterDownload function ,such as data decrypt.
+ *   urlList {Array|function} ->
  *        Array should like [{titile:t1,urls:[a,b,c],size:123,options:{ }},{title:t1,urls:function(){ function.prototype.next(){}},size:123}]
- *        options in urlList may include 1)headers for download 
+ *        options in urlList may include 1)headers for download
  */
 
 function extract(url, options, callback) {
-  if(!callback && typeof options == 'function' ){
+  options = options || {};
+
+  if (!callback && typeof options == 'function') {
     callback = options;
+    options = {};
   }
-  
-  matcher(url, function (err, moduleName, normalizedUrl) {
+
+
+  matcher(url, function(err, moduleName, normalizedUrl) {
     if (err) {
       callback && callback(err);
       return;
     }
-    var extractModule = require('./lib/extractors/' + moduleName);
-    extractModule.parse(normalizedUrl, options, function (err, urlsList, moreOptions) {
-      //urlsList =>[ {title:xx,size:yy,urls:['xx.flv?part1','xx.flv?part2']},{title:xx,size:yy,urls:['']}]
-      //some handler?
+    var ExtractModule = require('./lib/extractors/' + moduleName);
+    new ExtractModule(options).parse(normalizedUrl, function(err, urlsList, moreOptions) {
       callback && callback(err, urlsList, moreOptions);
     });
+    // extractModule.parse(normalizedUrl, options, function(err, urlsList, moreOptions) {
+    //   //urlsList =>[ {title:xx,size:yy,urls:['xx.flv?part1','xx.flv?part2']},{title:xx,size:yy,urls:['']}]
+    //   //some handler?
+    //   callback && callback(err, urlsList, moreOptions);
+    // });
   });
 }
 
@@ -47,19 +54,19 @@ if (module == require.main) {
     var url = process.argv[2];
     if (process.argv[3]) {
       try {
-        var options = JSON.parse(process.argv[3])
-      } catch (ex) { }
+        var options = JSON.parse(process.argv[3]);
+      } catch (ex) {}
     }
     if (!url) {
       process.exit(0);
     }
-    extract(url, options, function (err, infos, globalOptions) {
+    extract(url, options, function(err, infos, globalOptions) {
       if (err) {
         console.log('some thing wrong oops');
         console.trace(err);
         process.exit(1);
       };
-      infos.forEach(function (info, idx) {
+      infos.forEach(function(info, idx) {
         var headline = '';
         var options = ext.extend(globalOptions, info.options);
 
@@ -72,7 +79,7 @@ if (module == require.main) {
         }
         // node index.js url |xargs -d '\n'  |xargs wget -O
         /* For usage  like  wget `node index.js url`*/
-        info.urls.forEach(function (item, idx) {
+        info.urls.forEach(function(item, idx) {
           process.stdout.write(info.title + '.' + idx + ' ' + item + ' ' + headline + '\n'); //last space whatever
         });
       });
