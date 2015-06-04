@@ -3,6 +3,8 @@
 var info = require('./package');
 var matcher = require('./lib/matcher');
 
+var ext = require('./lib/utils/builtinext');
+
 exports.name = info.name;
 exports.version = info.version;
 
@@ -10,23 +12,33 @@ exports.version = info.version;
  * @params {String} url
  * @params {Object|null} options
  *    options includes 1) extract_proxy 2)
- * @params {function} callback(err,)
+ * @params {function} callback(err,urlsList,moreOptions)
+ *   moreOptions include 1)common headers for download headers:{'referer':xxx} 2)afterDownload function ,such as data decrypt. 
+ *   urlList {Array|function} -> 
+ *        Array should like [{titile:t1,urls:[a,b,c],size:123,options:{ }},{title:t1,urls:function(){ function.prototype.next(){}},size:123}]
+ *        options in urlList may include 1)headers for download 
  */
 
 function extract(url, options, callback) {
-  matcher(url, function(err, moduleName, normalizedUrl) {
+  if(!callback && typeof options == 'function' ){
+    callback = options;
+  }
+  
+  matcher(url, function (err, moduleName, normalizedUrl) {
     if (err) {
       callback && callback(err);
       return;
     }
     var extractModule = require('./lib/extractors/' + moduleName);
-    extractModule.parse(normalizedUrl, options, function(err, urlsList, moreOptions) {
+    extractModule.parse(normalizedUrl, options, function (err, urlsList, moreOptions) {
       //urlsList =>[ {title:xx,size:yy,urls:['xx.flv?part1','xx.flv?part2']},{title:xx,size:yy,urls:['']}]
       //some handler?
       callback && callback(err, urlsList, moreOptions);
     });
   });
 }
+
+
 
 exports.extract = extract;
 
@@ -36,31 +48,35 @@ if (module == require.main) {
     if (process.argv[3]) {
       try {
         var options = JSON.parse(process.argv[3])
-      } catch (ex) {}
+      } catch (ex) { }
     }
     if (!url) {
       process.exit(0);
     }
-    extract(url, options, function(err, infos) {
+    extract(url, options, function (err, infos, globalOptions) {
       if (err) {
         console.log('some thing wrong oops');
         console.trace(err);
         process.exit(1);
       };
-      
-      var headline = '';
-      for(var i in infos.options){
-        if(i == 'headers'){
-           for(var j in infos.options[i]){
-             headline += '--header '+j+':'+infos.options[i][j]+'';
-           }
+      infos.forEach(function (info, idx) {
+        var headline = '';
+        var options = ext.extend(globalOptions, info.options);
+
+        for (var i in options) {
+          if (i == 'headers') {
+            for (var j in options[i]) {
+              headline += '--header ' + j + ':' + options[i][j] + '';
+            }
+          }
         }
-      }
-      // echo `node index.js url `|xargs -0 wget -O 
-      /* For usage  like  wget `node index.js url`*/
-      infos.urls.forEach(function(item, idx) {
-        process.stdout.write(infos.title+'.' + idx + ' ' + item + ' '+ headline +'\n'); //last space whatever
+        // node index.js url |xargs -d '\n'  |xargs wget -O
+        /* For usage  like  wget `node index.js url`*/
+        info.urls.forEach(function (item, idx) {
+          process.stdout.write(info.title + '.' + idx + ' ' + item + ' ' + headline + '\n'); //last space whatever
+        });
       });
+
 
     });
   } else {
