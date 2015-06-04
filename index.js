@@ -51,6 +51,16 @@ if (module == require.main) {
       infos.urls.forEach(function(item, idx) {
         process.stdout.write(item + ' '); //last space whatever
       });
+      
+      for(var i in infos.options){
+        if(i == 'headers'){
+           for(var j in infos.options[i]){
+             process.stdout.write('--header "'+j+':'+infos.options[i][j]+'" ');
+           }
+        }
+      }
+      
+
     });
   } else {
     process.exit(0);
