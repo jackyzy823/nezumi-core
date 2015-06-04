@@ -46,20 +46,21 @@ if (module == require.main) {
         console.log('some thing wrong oops');
         console.trace(err);
         process.exit(1);
-      }
-      /* For usage  like  wget `node index.js url`*/
-      infos.urls.forEach(function(item, idx) {
-        process.stdout.write(item + ' '); //last space whatever
-      });
+      };
       
+      var headline = '';
       for(var i in infos.options){
         if(i == 'headers'){
            for(var j in infos.options[i]){
-             process.stdout.write('--header "'+j+':'+infos.options[i][j]+'" ');
+             headline += '--header '+j+':'+infos.options[i][j]+'';
            }
         }
       }
-      
+      // echo `node index.js url `|xargs -0 wget -O 
+      /* For usage  like  wget `node index.js url`*/
+      infos.urls.forEach(function(item, idx) {
+        process.stdout.write(infos.title+'.' + idx + ' ' + item + ' '+ headline +'\n'); //last space whatever
+      });
 
     });
   } else {
