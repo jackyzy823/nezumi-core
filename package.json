@@ -15,7 +15,9 @@
     "url": "git://github.com/jackyzy823/nezumi-core.git"
   },
   "scripts": {
-    "test": "node tests/nezumi.test.js"
+    "test": "node tests/nezumi.test.js",
+    "install": "node lib/matcher/gen_router.js",
+    "update": "node lib/matcher/gen_router.js"
   },
   "bin": {
     "nezumi": "./index.js"
