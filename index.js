@@ -35,6 +35,7 @@ function extract(url, options, callback) {
     }
     var ExtractModule = require('./lib/extractors/' + moduleName);
     new ExtractModule(options).parse(normalizedUrl, function(err, urlsList, moreOptions) {
+      moreOptions = moreOptions || {};
       callback && callback(err, urlsList, moreOptions);
     });
     // extractModule.parse(normalizedUrl, options, function(err, urlsList, moreOptions) {
