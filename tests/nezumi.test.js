@@ -21,6 +21,13 @@ match('http://www.letv.com/ptv/vplay/835594.html', function(err, result) {
   assert.equal('letv', result);
 });
 
+match('http://tv.sohu.com/20140318/n396785017.shtml', function(err, result) {
+  assert.equal('sohu', result);
+});
+
+match('http://my.tv.sohu.com/pl/8990047/80342721.shtml', function(err, result) {
+  assert.equal('sohu', result);
+});
 
 
 match(123, function(err, result) {

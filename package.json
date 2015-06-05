@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "core utils of nezumi project",
   "author": "jackyzy823",
+  "license": "MIT",
   "main": "./index.js",
   "dependencies": {
     "async": "^0.9.0",
