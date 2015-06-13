@@ -11,7 +11,7 @@ exports.version = info.version;
 /*
  * @params {String} url
  * @params {Object|null} options
- *    options includes 1) proxy for extractors 2)
+ *    options includes 1) proxy for extractors 2) quality
  * @params {function} callback(err,urlsList,moreOptions)
  *   moreOptions include 1)common headers for download headers:{'referer':xxx} 2)afterDownload function ,such as data decrypt.
  *   urlList {Array|function} ->
@@ -22,9 +22,18 @@ exports.version = info.version;
 function extract(url, options, callback) {
   options = options || {};
 
+  if (!url || typeof(url) !== 'string') {
+    callback && callback(new Error('please specfic a url!'));
+    return;
+  }
+
   if (!callback && typeof options == 'function') {
     callback = options;
     options = {};
+  }
+
+  if (!options.quality || !Number.isInteger(options.quality) || options.quality > 5 || options.quality < 1) {
+    options.quality = 5;
   }
 
 
@@ -34,14 +43,17 @@ function extract(url, options, callback) {
       return;
     }
     var ExtractModule = require('./lib/extractors/' + moduleName);
-    new ExtractModule(options).parse(normalizedUrl, function(err, urlsList, moreOptions) {
+    new ExtractModule(options).parse(normalizedUrl, function(err, urlLists, moreOptions) {
       moreOptions = moreOptions || {};
-      callback && callback(err, urlsList, moreOptions);
+      if (!Array.isArray(urlLists)) {
+        urlLists = [urlLists];
+      }
+      callback && callback(err, urlLists, moreOptions);
     });
-    // extractModule.parse(normalizedUrl, options, function(err, urlsList, moreOptions) {
-    //   //urlsList =>[ {title:xx,size:yy,urls:['xx.flv?part1','xx.flv?part2']},{title:xx,size:yy,urls:['']}]
+    // extractModule.parse(normalizedUrl, options, function(err, urlLists, moreOptions) {
+    //   //urlLists =>[ {title:xx,size:yy,urls:['xx.flv?part1','xx.flv?part2']},{title:xx,size:yy,urls:['']}]
     //   //some handler?
-    //   callback && callback(err, urlsList, moreOptions);
+    //   callback && callback(err, urlLists, moreOptions);
     // });
   });
 }

@@ -3,7 +3,7 @@
 ##Existence
 
 * ~~single file endswith `.js` in extractors folder~~
-* subfolder contains `index.js` and `matcher.js` in extractors folder
+* subfolder contains `index.js` and `router.js` in extractors folder
 
 ###Why subfolder
 
@@ -12,3 +12,17 @@
 
 ###Why not single file
 * finally,i decided to move all extractors to its subfolder,because changes in extractor's modules will not affect the parent folder.
+
+###TODO
+* kankan (xunlei)
+* qq (Tencent)
+* sina
+* youku/tudou
+* acfun
+* bilibili
+
+###DONE AND MAINTAINING
+* LeTV
+* IQiYi
+* PPTV
+* Sohu
