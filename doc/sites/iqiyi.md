@@ -20,3 +20,10 @@
 5 fullhd
 10 4k
 96 topspeed
+
+### Changelog
+-> http://www.iqiyi.com/common/flashplayer/20150612/MainPlayer_5_2_23_1_c3_2_6_5.swf
+    In this version do not directly use enc key 
+    gen enc key (so called sc ) in DMEmagelzzup.mix(tvid) -> (tm->getTimer(),src='hsalf',sc)
+    encrypy alogrithm is md5(DMEmagelzzup.mix.genInnerKey +tm+tvid)
+    how to gen genInnerKey ,can see first 3 lin in mix function in this file
