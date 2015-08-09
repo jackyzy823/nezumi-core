@@ -10,7 +10,9 @@
     "request": "^2.53.0",
     "elementtree": "^0.1.6"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "*"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/jackyzy823/nezumi-core.git"
